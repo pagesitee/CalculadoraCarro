@@ -4,18 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Combustível</title>
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json"> <!-- Caminho absoluto para o manifest -->
     <script>
+        // Registro do Service Worker com caminho absoluto e escopo correto
         if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
-        .then(() => {
-            console.log("Service Worker registrado com sucesso!");
-        })
-        .catch(err => {
-            console.log("Erro ao registrar Service Worker: ", err);
-        });
-}
-
+            navigator.serviceWorker.register('/service-worker.js', { scope: '/' }) // Caminho absoluto para o service worker
+                .then(() => console.log("Service Worker registrado com sucesso!"))
+                .catch(err => console.log("Erro ao registrar Service Worker: ", err));
+        }
     </script>
     <style>
         body {
@@ -125,8 +121,10 @@
     </div>
 
     <script>
-        document.body.style.backgroundImage = `url('Imagens/imagem${Math.floor(Math.random() * 5) + 1}.jpg')`;
-        
+        // Alteração do caminho da imagem do background para carregar corretamente
+        document.body.style.backgroundImage = `url('/Imagens/imagem${Math.floor(Math.random() * 5) + 1}.jpg')`; // Caminho absoluto para imagens
+
+        // Função para formatar os valores de entrada
         function formatarValor(input) {
             let valor = input.value.replace(/[^0-9]/g, "");
             if (valor.length > 2) {
@@ -135,6 +133,7 @@
             input.value = valor;
         }
 
+        // Função para calcular a melhor opção entre etanol e gasolina
         function calcular() {
             let etanol = parseFloat(document.getElementById('etanol').value.replace(',', '.'));
             let gasolina = parseFloat(document.getElementById('gasolina').value.replace(',', '.'));
@@ -149,6 +148,8 @@
             resultado.style.background = etanol / gasolina < 0.7 ? "#28a745" : "#dc3545";
             resultado.classList.add("mostrar");
         }
+
+        // Função para limpar os campos e o resultado
         function limparCampos() {
             document.getElementById('etanol').value = "";
             document.getElementById('gasolina').value = "";
